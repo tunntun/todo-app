@@ -2,36 +2,36 @@ const express = require('express');
 
 const router = express.Router();
 
-const createTaskGetController = require('../controllers/task/create/get');
+const listTaskController = require('../controllers/task/create/get');
 const updateTaskGetController = require('../controllers/task/update/get');
-const deleteTaskGetController = require('../controllers/task/update/delete/get');
+const deleteTaskGetController = require('../controllers/task/delete/get');
 
 const createTaskPostController = require('../controllers/task/create/post');
-const updateTaskPostController = require('../controllers/task/update/post');
+const updateTaskPutController = require('../controllers/task/update/put');
 
 router.get(
   '/',
-  createTaskGetController
+  listTaskController
 );
 
 router.get(
-  'update',
+  '/update',
   updateTaskGetController
 );
 
 router.get(
-  'update/delete',
+  '/update/delete',
   deleteTaskGetController
 );
 
 router.post(
-  'create',
+  '/create',
   createTaskPostController
 );
 
 router.post(
-  'update',
-  updateTaskPostController
+  '/update',
+  updateTaskPutController
 );
 
 module.exports = router;
