@@ -12,6 +12,10 @@ async function getTaskById(id) {
     throw new Error('bad_request');
 
   const [rows] = await db.query('SELECT * FROM tasks WHERE id = ?', [id]);
+
+  if(rows.length === 0)
+    throw new Error('document_not_found');
+
   return rows[0];
 }
 
@@ -27,7 +31,6 @@ async function createTask(title, description, status) {
   console.log(result);
   return;
 }
-
 
 async function updateTask(id, title, description, status){
   if(!id || !Number.isInteger(id))
@@ -51,6 +54,23 @@ async function deleteTask(id) {
   return {  message: `task ${id} deleted` };
 }
 
+async function toggleTaskStatus(id) {
+  if(!id || !Number.isInteger(id))
+    throw new Error('bad_request');
+
+  let task;
+  try {
+    task = await getTaskById(id);
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+  const newStatus = task.status === 'completed' ? 'pending' : 'completed';
+
+  const updatedTask = await updateTask(task.id, task.title, task.description, newStatus);
+  return updatedTask;
+}
+
 
 module.exports = {
   getAllTasks,
@@ -58,4 +78,5 @@ module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  toggleTaskStatus
 };
