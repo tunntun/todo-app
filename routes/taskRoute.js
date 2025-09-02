@@ -10,7 +10,7 @@ const createTaskPostController = require('../controllers/task/create/post');
 const updateTaskPostController = require('../controllers/task/update/post');
 
 router.get(
-  'create',
+  '/',
   createTaskGetController
 );
 
