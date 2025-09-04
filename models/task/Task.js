@@ -46,7 +46,7 @@ async function updateTask(id, title, description, status){
   return await getTaskById(id);
 }
 
-async function deleteTask(id) {
+async function deleteTaskById(id) {
   if(!id || !Number.isInteger(id))
     throw new Error('bad_request');
 
@@ -72,6 +72,6 @@ module.exports = {
   getTaskById,
   createTask,
   updateTask,
-  deleteTask,
+  deleteTaskById,
   toggleTaskStatus
 };

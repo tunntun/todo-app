@@ -3,8 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const listTaskController = require('../controllers/task/create/get');
+const getTaskByIdController = require('../controllers/task/getById/get');
 const updateTaskGetController = require('../controllers/task/update/get');
-const deleteTaskGetController = require('../controllers/task/delete/get');
+const deleteTaskByIdGetController = require('../controllers/task/delete/get');
 
 const createTaskPostController = require('../controllers/task/create/post');
 const updateTaskPutController = require('../controllers/task/update/put');
@@ -15,13 +16,18 @@ router.get(
 );
 
 router.get(
+  '/:id',
+  getTaskByIdController
+);
+
+router.get(
   '/update',
   updateTaskGetController
 );
 
 router.get(
   '/update/delete',
-  deleteTaskGetController
+  deleteTaskByIdGetController
 );
 
 router.post(
