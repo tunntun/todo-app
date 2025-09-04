@@ -21,12 +21,12 @@ router.get(
 );
 
 router.get(
-  '/update',
+  '/update/:id',
   updateTaskGetController
 );
 
 router.get(
-  '/update/delete',
+  '/update/delete/:id',
   deleteTaskByIdGetController
 );
 
@@ -35,8 +35,8 @@ router.post(
   createTaskPostController
 );
 
-router.post(
-  '/update',
+router.put(
+  '/update/:id',
   updateTaskPutController
 );
 

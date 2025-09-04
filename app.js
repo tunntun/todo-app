@@ -8,9 +8,8 @@ const express = require('express');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 require('dotenv').config();
-const { pool } = require('./db/db');
+const { pool } = require('./models/db/db');
 
-dotenv.config({ path: path.join(__dirname, '.env') });
 const numCPUs = process.env.WEB_CONCURRENCY || os.cpus().length;
 
 

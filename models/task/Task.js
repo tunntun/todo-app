@@ -8,6 +8,8 @@ async function getAllTasks() {
 }
 
 async function getTaskById(id) {
+  console.log(typeof(id));
+  console.log(Number.isInteger(id));
   if(!id || !Number.isInteger(id))
     throw new Error('bad_request');
 
@@ -29,7 +31,7 @@ async function createTask(title, description, status) {
 
   const [result] = await promisePool.query('INSERT INTO tasks (title, description, status) VALUES (?, ?, ?)', [title, description, status]);
 
-  return await getTaskById(id);
+  return await getTaskById(result.insertId);
 }
 
 async function updateTask(id, title, description, status){
@@ -49,6 +51,11 @@ async function updateTask(id, title, description, status){
 async function deleteTaskById(id) {
   if(!id || !Number.isInteger(id))
     throw new Error('bad_request');
+
+  const task = await getTaskById(id);
+  if (!task)
+    throw new Error('document_not_found');
+
 
   await promisePool.query('DELETE FROM tasks WHERE id =?', [id]);
   return {  message: `task ${id} deleted` };
