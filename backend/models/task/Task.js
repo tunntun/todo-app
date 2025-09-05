@@ -8,8 +8,6 @@ async function getAllTasks() {
 }
 
 async function getTaskById(id) {
-  console.log(typeof(id));
-  console.log(Number.isInteger(id));
   if(!id || !Number.isInteger(id))
     throw new Error('bad_request');
 

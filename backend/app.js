@@ -28,7 +28,7 @@ if (cluster.isMaster) {
   const app = express();
   const server = http.createServer(app);
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 4000;
 
   const taskRouteController = require('./routes/taskRoute');
 
@@ -52,7 +52,7 @@ if (cluster.isMaster) {
       req.body = {};
     next();
   });
-  app.use('/tasks', taskRouteController);
+  app.use('/', taskRouteController);
 
 
   server.listen(PORT, () => {
