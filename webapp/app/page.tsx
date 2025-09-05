@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import TaskCard from "@/components/TaskCard";
+
 
 type Task = {
   id: number;
@@ -25,78 +27,91 @@ export default function Home() {
 
   const addTask = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newTitle.trim()) return;
 
     const res = await fetch("http://localhost:4000", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: newTitle,
-        description: newDescription,
-        status: newStatus,
-      }),
+      body: JSON.stringify({ title: newTitle, status: "pending" }),
     });
 
     const newTask: Task = await res.json();
     setTasks([...tasks, newTask]);
-
-    // reset form
     setNewTitle("");
-    setNewDescription("");
-    setNewStatus("pending");
   };
 
-  return (
-    <main className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Todo List</h1>
+  const toggleTask = async (id: number) => {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
 
-      {/* Add Task Form */}
-      <form onSubmit={addTask} className="flex flex-col gap-2 mb-6">
+    const updated = {
+      ...task,
+      status: task.status === "done" ? "pending" : "done",
+    };
+
+    await fetch(`http://localhost:4000/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated),
+    });
+
+    setTasks(tasks.map((t) => (t.id === id ? updated : t)));
+  };
+
+  const deleteTask = async (id: number) => {
+    await fetch(`http://localhost:4000/${id}`, { method: "DELETE" });
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
+
+  const todoTasks = tasks.filter((t) => t.status !== "done");
+  const doneTasks = tasks.filter((t) => t.status === "done");
+
+  return (
+    <main>
+      <h1>Todo List</h1>
+
+      {/* Input */}
+      <form onSubmit={addTask} style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
         <input
           type="text"
-          placeholder="Task title"
+          placeholder="Add a new task"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          className="border rounded p-2"
-          required
+          style={{
+            flex: 1,
+            padding: "8px",
+            borderRadius: "6px",
+            border: "1px solid #444",
+            background: "#1a1a1a",
+            color: "#eee",
+          }}
         />
-        <textarea
-          placeholder="Task description"
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-          className="border rounded p-2"
-        />
-        <select
-          value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value)}
-          className="border rounded p-2"
-        >
-          <option value="pending">Pending</option>
-          <option value="done">Done</option>
-        </select>
         <button
           type="submit"
-          className="bg-blue-500 text-white rounded p-2 mt-2"
+          style={{
+            background: "#6b46c1",
+            color: "#fff",
+            padding: "8px 16px",
+            borderRadius: "6px",
+            border: "none",
+            cursor: "pointer",
+          }}
         >
-          Add Task
+          +
         </button>
       </form>
 
-      {/* Task List */}
-      <ul className="space-y-3">
-        {tasks.map((task) => (
-          <li key={task.id} className="p-3 border rounded">
-            <h2 className="font-semibold">{task.title}</h2>
-            <p>{task.description}</p>
-            <span
-              className={
-                task.status === "done" ? "text-green-600" : "text-yellow-600"
-              }
-            >
-              {task.status}
-            </span>
-          </li>
-        ))}
-      </ul>
+      {/* To do section */}
+      <h2>Tasks to do - {todoTasks.length}</h2>
+      {todoTasks.map((task) => (
+        <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
+      ))}
+
+      {/* Done section */}
+      <h2 style={{ marginTop: "20px" }}>Done - {doneTasks.length}</h2>
+      {doneTasks.map((task) => (
+        <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
+      ))}
     </main>
   );
 }
