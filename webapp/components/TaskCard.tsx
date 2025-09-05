@@ -1,4 +1,4 @@
-import styles from "./TaskCard.module.css";
+import styles from "../styles/TaskCard.module.css";
 
 type Task = {
   id: number;

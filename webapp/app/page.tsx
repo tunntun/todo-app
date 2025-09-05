@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import TaskCard from "@/components/TaskCard";
+import styles from "../styles/page.module.css";
 
 
 type Task = {
@@ -68,7 +69,7 @@ export default function Home() {
 
   return (
     <main>
-      <h1>Todo List</h1>
+      <h1 className="styles.title">Todo List</h1>
 
       {/* Input */}
       <form onSubmit={addTask} style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
