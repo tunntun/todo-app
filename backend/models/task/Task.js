@@ -8,8 +8,9 @@ async function getAllTasks() {
 }
 
 async function getTaskById(id) {
-  if(!id || !Number.isInteger(id))
-    throw new Error('bad_request');
+  // Dön buraua
+  // if(!id || !Number.isInteger(id))
+  //   throw new Error('bad_request');
 
   const [rows] = await promisePool.query('SELECT * FROM tasks WHERE id = ?', [id]);
 

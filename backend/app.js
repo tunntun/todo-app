@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cluster = require('cluster');
+const cors = require("cors");
 const http = require('http');
 const os = require('os');
 const path = require('path');
@@ -26,6 +27,8 @@ if (cluster.isMaster) {
   });
 } else {
   const app = express();
+  app.use(cors());
+
   const server = http.createServer(app);
 
   const PORT = process.env.PORT || 4000;
