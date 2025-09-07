@@ -81,13 +81,13 @@ export default function Home() {
       </Link>
 
       {/* To do section */}
-      <h2>Tasks to do - {todoTasks.length}</h2>
+      <h2 className={styles.title}>Tasks to do - {todoTasks.length}</h2>
       {todoTasks.map((task) => (
         <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
       ))}
 
       {/* Done section */}
-      <h2 className={styles.doneTitleText}>Done - {doneTasks.length}</h2>
+      <h2 className={styles.title}>Done - {doneTasks.length}</h2>
       {doneTasks.map((task) => (
         <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
       ))}
