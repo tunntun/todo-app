@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import TaskCard from "@/components/TaskCard";
 import styles from "../styles/page.module.css";
@@ -75,36 +75,10 @@ export default function Home() {
     <main className={styles.main}>
       <h1 className={styles.title}>Todo List</h1>
 
-      {/* Input */}
-      <form onSubmit={addTask} className={styles.submitButtonWrapper}>
-        <input
-          type="text"
-          placeholder="Task title"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-          className={styles.taskCreateText}
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="Task description"
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-          className={styles.taskCreateText}
-        />
-
-        <select
-          value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value)}
-          className={styles.taskCreateText}
-        >
-          <option value="pending">Pending</option>
-          <option value="done">Done</option>
-        </select>
-
-        <button type="submit" className={styles.submitButton}>+</button>
-      </form>
+      {/* Create Task Button */}
+      <Link href="/create">
+        <button className={styles.createButton}>Create Task</button>
+      </Link>
 
       {/* To do section */}
       <h2>Tasks to do - {todoTasks.length}</h2>
