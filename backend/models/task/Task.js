@@ -23,6 +23,7 @@ async function getTaskById(id) {
 async function createTask(title, description, status) {
   if(!title || typeof title != 'string' || title.trim().length > MAX_DATABASE_TITLE_FIELD_LENGTH)
     throw new Error('bad_request');
+  console.log(description);
   if(!description || typeof description !='string' || description.trim().length > MAX_DATABASE_TEXT_FIELD_LENGTH)
     throw new Error('bad_request');
   if(!status || typeof status != 'string' || status.trim().length > MAX_DATABASE_TEXT_FIELD_LENGTH)

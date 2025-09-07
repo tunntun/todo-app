@@ -33,7 +33,11 @@ export default function Home() {
     const res = await fetch("http://localhost:4000", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: newTitle, status: "pending" }),
+      body: JSON.stringify({
+        title: newTitle,
+        description: newDescription,
+        status: newStatus
+      }),
     });
 
     const newTask: Task = await res.json();
@@ -68,38 +72,38 @@ export default function Home() {
   const doneTasks = tasks.filter((t) => t.status === "done");
 
   return (
-    <main>
-      <h1 className="styles.title">Todo List</h1>
+    <main className={styles.main}>
+      <h1 className={styles.title}>Todo List</h1>
 
       {/* Input */}
-      <form onSubmit={addTask} style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+      <form onSubmit={addTask} className={styles.submitButtonWrapper}>
         <input
           type="text"
-          placeholder="Add a new task"
+          placeholder="Task title"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          style={{
-            flex: 1,
-            padding: "8px",
-            borderRadius: "6px",
-            border: "1px solid #444",
-            background: "#1a1a1a",
-            color: "#eee",
-          }}
+          className={styles.taskCreateText}
+          required
         />
-        <button
-          type="submit"
-          style={{
-            background: "#6b46c1",
-            color: "#fff",
-            padding: "8px 16px",
-            borderRadius: "6px",
-            border: "none",
-            cursor: "pointer",
-          }}
+
+        <input
+          type="text"
+          placeholder="Task description"
+          value={newDescription}
+          onChange={(e) => setNewDescription(e.target.value)}
+          className={styles.taskCreateText}
+        />
+
+        <select
+          value={newStatus}
+          onChange={(e) => setNewStatus(e.target.value)}
+          className={styles.taskCreateText}
         >
-          +
-        </button>
+          <option value="pending">Pending</option>
+          <option value="done">Done</option>
+        </select>
+
+        <button type="submit" className={styles.submitButton}>+</button>
       </form>
 
       {/* To do section */}
@@ -109,7 +113,7 @@ export default function Home() {
       ))}
 
       {/* Done section */}
-      <h2 style={{ marginTop: "20px" }}>Done - {doneTasks.length}</h2>
+      <h2 className={styles.doneTitleText}>Done - {doneTasks.length}</h2>
       {doneTasks.map((task) => (
         <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
       ))}
