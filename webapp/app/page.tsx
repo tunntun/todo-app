@@ -21,7 +21,7 @@ export default function Home() {
   const [newStatus, setNewStatus] = useState("pending");
 
   useEffect(() => {
-    fetch("http://localhost:4000")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}`)
       .then((res) => res.json())
       .then((data) => setTasks(data));
   }, []);
@@ -30,7 +30,7 @@ export default function Home() {
     e.preventDefault();
     if (!newTitle.trim()) return;
 
-    const res = await fetch("http://localhost:4000", {
+    const res = await fetch("`${process.env.NEXT_PUBLIC_API_URL}`", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -54,7 +54,7 @@ export default function Home() {
       status: task.status === "done" ? "pending" : "done",
     };
 
-    await fetch(`http://localhost:4000/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
@@ -64,7 +64,7 @@ export default function Home() {
   };
 
   const deleteTask = async (id: number) => {
-    await fetch(`http://localhost:4000/${id}`, { method: "DELETE" });
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${id}`, { method: "DELETE" });
     setTasks(tasks.filter((t) => t.id !== id));
   };
 
