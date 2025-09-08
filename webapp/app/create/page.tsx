@@ -13,7 +13,7 @@ export default function CreateTaskPage() {
   const addTask = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await fetch("`${process.env.NEXT_PUBLIC_API_URL}", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description, status }),
