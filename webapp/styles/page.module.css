@@ -26,3 +26,7 @@
 .taskCreateText {
   font-size: var(--task-create-text-font-size);
 }
+
+.createButton {
+
+}

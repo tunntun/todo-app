@@ -14,10 +14,12 @@ type TaskCardProps = {
 
 export default function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
   return (
-    <div className={styles.card}>
+    <div className={
+      `${task.status === "done" ? styles.doneCard : styles.pendingCard}`
+    }>
       <span
         className={`${styles.title} ${
-          task.status === "done" ? styles.done : ""
+          task.status === "done" ? styles.done : styles.pending
         }`}
       >
         {task.title}

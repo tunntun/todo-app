@@ -1,6 +1,6 @@
-.card {
-  background: #1a1a1a;
-  border: 1px solid #333;
+.doneCard {
+  background: #15101C;
+  border: 0.1px solid #78CFB0;
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 12px;
@@ -9,13 +9,28 @@
   align-items: center;
 }
 
+.pendingCard {
+  background: #15101C;
+  border: 0.1px solid #9E78CF;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 .title {
   font-size: 16px;
 }
 
 .done {
   text-decoration: line-through;
-  color: gray;
+  color: #78CFB0;
+}
+.pending {
+  color: #9E78CF;
 }
 
 .actions {

@@ -75,18 +75,18 @@ export default function Home() {
     <main className={styles.main}>
       <h1 className={styles.title}>Todo List</h1>
 
-      {/* Create Task Button */}
+
       <Link href="/create">
         <button className={styles.createButton}>Create Task</button>
       </Link>
 
-      {/* To do section */}
+
       <h2 className={styles.title}>Tasks to do - {todoTasks.length}</h2>
       {todoTasks.map((task) => (
         <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
       ))}
 
-      {/* Done section */}
+
       <h2 className={styles.title}>Done - {doneTasks.length}</h2>
       {doneTasks.map((task) => (
         <TaskCard key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
